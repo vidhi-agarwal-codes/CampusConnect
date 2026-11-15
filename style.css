@@ -1,0 +1,239 @@
+/* Campus Connect — dashboard prototype styles */
+
+:root{
+  --ink: #16223A;
+  --paper: #ECEEE3;
+  --card: #FFFFFF;
+  --line: #D6D9CB;
+  --slate: #57616B;
+  --amber: #C88A1F;
+  --amber-soft: #F1DDAE;
+  --sage: #4F6B4C;
+  --sage-soft: #DCE6D6;
+  --rust: #AD4E37;
+  --rust-soft: #F1DCD5;
+}
+
+*{ box-sizing: border-box; }
+
+body{
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.5;
+}
+
+/* ---------- Navbar ---------- */
+
+.navbar{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 32px;
+  background: var(--card);
+  border-bottom: 1px solid var(--line);
+}
+
+.logo{
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.nav-links{
+  display: flex;
+  gap: 28px;
+}
+
+.nav-links a{
+  color: var(--slate);
+  text-decoration: none;
+  font-size: 14.5px;
+  font-weight: 500;
+  padding-bottom: 4px;
+  border-bottom: 2px solid transparent;
+}
+
+.nav-links a.active{
+  color: var(--ink);
+  border-bottom-color: var(--amber);
+}
+
+.nav-links a:hover{
+  color: var(--ink);
+}
+
+/* ---------- Dashboard layout ---------- */
+
+.dashboard{
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 36px 24px 64px;
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+.dashboard h2{
+  font-size: 21px;
+  margin: 0 0 6px;
+}
+
+.subtitle{
+  color: var(--slate);
+  font-size: 14px;
+  margin: 0 0 20px;
+}
+
+/* ---------- Left: project requirements ---------- */
+
+.project-requirements{
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 22px;
+  position: sticky;
+  top: 20px;
+}
+
+.role-status-list{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.role-status{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  font-size: 14.5px;
+}
+
+.role-status.filled{
+  background: var(--sage-soft);
+  border-color: var(--sage);
+}
+
+.role-status.pending{
+  background: var(--paper);
+}
+
+.status-badge{
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.status-badge.filled{
+  background: var(--sage);
+  color: #fff;
+}
+
+.status-badge.look{
+  background: var(--amber-soft);
+  color: #8a5f14;
+}
+
+/* ---------- Right: recommendations ---------- */
+
+.recommendations h2{
+  margin-bottom: 18px;
+}
+
+.student-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 18px;
+}
+
+.student-card{
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: box-shadow .15s ease, transform .15s ease;
+}
+
+.student-card:hover{
+  box-shadow: 0 6px 18px rgba(22, 34, 58, 0.08);
+  transform: translateY(-2px);
+}
+
+.card-header h3{
+  margin: 0 0 6px;
+  font-size: 17px;
+}
+
+.role-tag{
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.role-tag.backend{ background: var(--amber-soft); color: #8a5f14; }
+.role-tag.database{ background: var(--sage-soft); color: var(--sage); }
+.role-tag.dsa{ background: var(--rust-soft); color: var(--rust); }
+
+.bio{
+  font-size: 14px;
+  color: var(--slate);
+  margin: 0;
+}
+
+.skills{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.skills span{
+  font-size: 12px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  padding: 4px 9px;
+  border-radius: 6px;
+  color: var(--ink);
+}
+
+.invite-btn{
+  margin-top: auto;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background: var(--ink);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .15s ease;
+}
+
+.invite-btn:hover{
+  background: var(--amber);
+  color: var(--ink);
+}
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 760px){
+  .dashboard{
+    grid-template-columns: 1fr;
+  }
+  .project-requirements{
+    position: static;
+  }
+  .navbar{
+    flex-direction: column;
+    gap: 10px;
+  }
+}

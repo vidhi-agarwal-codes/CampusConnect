@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Campus Connect — Find the team, not just the group chat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+
+  :root{
+    --ink: #16223A;
+    --paper: #ECEEE3;
+    --card: #E2E4D6;
+    --card-line: #C7CABA;
+    --amber: #C88A1F;
+    --amber-soft: #F1DDAE;
+    --sage: #4F6B4C;
+    --sage-soft: #D9E3D3;
+    --rust: #AD4E37;
+    --rust-soft: #EAD3CB;
+    --slate: #57616B;
+    --white: #FAFAF6;
+    --serif: 'Newsreader', serif;
+    --sans: 'IBM Plex Sans', sans-serif;
+    --mono: 'IBM Plex Mono', monospace;
+  }
+
+  *{ box-sizing: border-box; }
+
+  html{ scroll-behavior: smooth; }
+
+  body{
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a{ color: inherit; }
+
+  img, svg{ display: block; max-width: 100%; }
+
+  .wrap{
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  /* ---------- Header ---------- */
+
+  header.site{
+    border-bottom: 1px solid var(--card-line);
+  }
+
+  .site-bar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px 32px;
+    max-width: 1120px;
+    margin: 0 auto;
+  }
+
+  .logo{
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    font-family: var(--serif);
+    font-size: 21px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .logo .dot{
+    color: var(--amber);
+  }
+
+  nav.site-nav{
+    display: flex;
+    gap: 32px;
+    font-size: 15px;
+    color: var(--slate);
+  }
+
+  nav.site-nav a{
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    padding-bottom: 2px;
+    transition: border-color .15s ease, color .15s ease;
+  }
+
+  nav.site-nav a:hover, nav.site-nav a:focus-visible{
+    color: var(--ink);
+    border-bottom-color: var(--amber);
+  }
+
+  .btn{
+    display: inline-block;
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 11px 22px;
+    border: 1px solid var(--ink);
+    color: var(--ink);
+    background: transparent;
+    cursor: pointer;
+    transition: background .15s ease, color .15s ease, transform .1s ease;
+  }
+
+  .btn:hover, .btn:focus-visible{
+    background: var(--ink);
+    color: var(--white);
+  }
+
+  .btn:active{ transform: translateY(1px); }
+
+  .btn.primary{
+    background: var(--ink);
+    color: var(--white);
+  }
+
+  .btn.primary:hover, .btn.primary:focus-visible{
+    background: var(--amber);
+    border-color: var(--amber);
+    color: var(--ink);
+  }
+
+  :focus-visible{
+    outline: 2px solid var(--amber);
+    outline-offset: 2px;
+  }
+
+  /* ---------- Hero ---------- */
+
+  .hero{
+    padding: 84px 0 96px;
+  }
+
+  .hero-grid{
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+
+  .hero-eyebrow{
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--sage);
+    margin: 0 0 18px;
+  }
+
+  h1{
+    font-family: var(--serif);
+    font-size: 52px;
+    line-height: 1.08;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    margin: 0 0 24px;
+  }
+
+  h1 em{
+    font-style: italic;
+    color: var(--sage);
+  }
+
+  .hero p.lede{
+    font-size: 18px;
+    color: var(--slate);
+    max-width: 46ch;
+    margin: 0 0 32px;
+  }
+
+  .hero-actions{
+    display: flex;
+    gap: 14px;
+    margin-bottom: 40px;
+  }
+
+  .hero-stats{
+    display: flex;
+    gap: 40px;
+    border-top: 1px solid var(--card-line);
+    padding-top: 20px;
+  }
+
+  .hero-stats div strong{
+    display: block;
+    font-family: var(--serif);
+    font-size: 26px;
+    font-weight: 600;
+  }
+
+  .hero-stats div span{
+    font-size: 13px;
+    color: var(--slate);
+  }
+
+  /* ---------- Roster board (hero visual) ---------- */
+
+  .roster-board{
+    background: var(--white);
+    border: 1px solid var(--card-line);
+    padding: 20px;
+  }
+
+  .roster-board-head{
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 16px;
+    padding-bottom: 14px;
+    border-bottom: 1px dashed var(--card-line);
+  }
+
+  .roster-board-head h2{
+    font-family: var(--serif);
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .roster-board-head span{
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--slate);
+  }
+
+  .slot{
+    display: grid;
+    grid-template-columns: 34px 1fr;
+    border: 1px solid var(--card-line);
+    margin-bottom: 10px;
+    background: var(--card);
+  }
+
+  .slot:last-child{ margin-bottom: 0; }
+
+  .slot-tab{
+    background: var(--ink);
+    color: var(--white);
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.03em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 0;
+  }
+
+  .slot.open .slot-tab{ background: var(--rust); }
+
+  .slot-body{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+  }
+
+  .avatar{
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--amber-soft);
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 15px;
+    flex-shrink: 0;
+  }
+
+  .slot-info{ flex: 1; min-width: 0; }
+
+  .slot-info .role{
+    font-size: 12px;
+    color: var(--slate);
+    margin: 0 0 2px;
+  }
+
+  .slot-info .name{
+    font-weight: 600;
+    font-size: 15px;
+    margin: 0 0 4px;
+  }
+
+  .chips{
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .chip{
+    font-family: var(--mono);
+    font-size: 10.5px;
+    background: var(--sage-soft);
+    color: var(--sage);
+    padding: 2px 7px;
+  }
+
+  .match{
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--sage);
+    flex-shrink: 0;
+    text-align: right;
+  }
+
+  .slot.open .slot-info .name{ color: var(--rust); }
+  .slot.open .match{ color: var(--rust); }
+
+  /* ---------- Section scaffolding ---------- */
+
+  section{ padding: 88px 0; }
+
+  section.alt{ background: var(--white); border-top: 1px solid var(--card-line); border-bottom: 1px solid var(--card-line); }
+
+  .section-head{
+    max-width: 56ch;
+    margin-bottom: 52px;
+  }
+
+  .section-head h2{
+    font-family: var(--serif);
+    font-size: 34px;
+    font-weight: 500;
+    margin: 0 0 14px;
+    letter-spacing: -0.01em;
+  }
+
+  .section-head p{
+    color: var(--slate);
+    font-size: 16.5px;
+    margin: 0;
+  }
+
+  /* ---------- How it works ---------- */
+
+  .steps{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--card-line);
+  }
+
+  .step{
+    padding: 24px 22px 0;
+    border-right: 1px solid var(--card-line);
+  }
+
+  .step:last-child{ border-right: none; }
+
+  .step-num{
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 30px;
+    color: var(--amber);
+    margin: 0 0 14px;
+  }
+
+  .step h3{
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 8px;
+  }
+
+  .step p{
+    font-size: 14.5px;
+    color: var(--slate);
+    margin: 0;
+    padding-bottom: 24px;
+  }
+
+  /* ---------- Matching factors ---------- */
+
+  .factor-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--card-line);
+    border: 1px solid var(--card-line);
+  }
+
+  .factor{
+    background: var(--paper);
+    padding: 26px 24px;
+  }
+
+  .factor h3{
+    font-size: 15.5px;
+    font-weight: 600;
+    margin: 0 0 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .factor h3 .mark{
+    width: 8px;
+    height: 8px;
+    background: var(--sage);
+    flex-shrink: 0;
+  }
+
+  .factor p{
+    font-size: 14px;
+    color: var(--slate);
+    margin: 0;
+  }
+
+  /* ---------- Example team ---------- */
+
+  .team-card{
+    border: 1px solid var(--card-line);
+    background: var(--white);
+  }
+
+  .team-card-head{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 24px 28px;
+    border-bottom: 1px solid var(--card-line);
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .team-card-head h3{
+    font-family: var(--serif);
+    font-size: 22px;
+    font-weight: 600;
+    margin: 0 0 6px;
+  }
+
+  .team-card-head p{
+    color: var(--slate);
+    font-size: 14.5px;
+    margin: 0;
+    max-width: 48ch;
+  }
+
+  .team-status{
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--sage);
+    border: 1px solid var(--sage);
+    padding: 5px 10px;
+    white-space: nowrap;
+  }
+
+  .roster-full{
+    padding: 8px 28px 28px;
+  }
+
+  .roster-full .slot{
+    grid-template-columns: 130px 1fr;
+    margin-bottom: 12px;
+  }
+
+  .roster-full .slot-tab{
+    writing-mode: horizontal-tb;
+    transform: none;
+    padding: 12px 8px;
+    text-align: center;
+  }
+
+  /* ---------- CTA ---------- */
+
+  .cta{
+    text-align: left;
+    padding: 96px 0;
+  }
+
+  .cta-inner{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    padding: 40px 0;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+
+  .cta h2{
+    font-family: var(--serif);
+    font-size: 32px;
+    font-weight: 500;
+    margin: 0;
+    max-width: 20ch;
+  }
+
+  /* ---------- Footer ---------- */
+
+  footer{
+    padding: 32px 0 48px;
+    font-size: 13.5px;
+    color: var(--slate);
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* ---------- Responsive ---------- */
+
+  @media (max-width: 860px){
+    .hero-grid{ grid-template-columns: 1fr; gap: 48px; }
+    h1{ font-size: 40px; }
+    .steps{ grid-template-columns: 1fr 1fr; }
+    .step{ border-right: none; border-bottom: 1px solid var(--card-line); padding-bottom: 20px; }
+    .factor-grid{ grid-template-columns: 1fr; }
+    nav.site-nav{ display: none; }
+    .cta-inner{ flex-direction: column; align-items: flex-start; }
+  }
+
+  @media (max-width: 520px){
+    .wrap, .site-bar{ padding-left: 20px; padding-right: 20px; }
+    h1{ font-size: 32px; }
+    .hero-stats{ flex-wrap: wrap; row-gap: 16px; }
+    .steps{ grid-template-columns: 1fr; }
+    .roster-full .slot{ grid-template-columns: 1fr; }
+    .roster-full .slot-tab{ padding: 8px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+    *{ transition: none !important; }
+  }
+
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="site-bar">
+    <div class="logo">Campus<span class="dot">·</span>Connect</div>
+    <nav class="site-nav">
+      <a href="#how">How it works</a>
+      <a href="#factors">Matching</a>
+      <a href="#example">See it work</a>
+    </nav>
+    <a href="#" class="btn">Log in</a>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="hero-eyebrow">for student project teams</p>
+        <h1>Stop posting "need backend dev" in six group chats.</h1>
+        <p class="lede">Campus Connect reads what a project actually needs — skills, interests, experience, availability, domain — and points you straight to the classmates who fit each open role.</p>
+        <div class="hero-actions">
+          <a href="#" class="btn primary">Build your profile</a>
+          <a href="#example" class="btn">See a matched team</a>
+        </div>
+        <div class="hero-stats">
+          <div><strong>4 roles</strong><span>filled per average project</span></div>
+          <div><strong>6 factors</strong><span>weighed per match</span></div>
+          <div><strong>1 profile</strong><span>used across every team</span></div>
+        </div>
+      </div>
+
+      <div class="roster-board">
+        <div class="roster-board-head">
+          <h2>Open roster — Campus Marketplace App</h2>
+          <span>3 / 4 filled</span>
+        </div>
+
+        <div class="slot">
+          <div class="slot-tab">BACK-END</div>
+          <div class="slot-body">
+            <div class="avatar">RS</div>
+            <div class="slot-info">
+              <p class="role">Back-end Developer</p>
+              <p class="name">Riya Sharma</p>
+              <div class="chips"><span class="chip">Node.js</span><span class="chip">REST APIs</span></div>
+            </div>
+            <div class="match">94%<br>match</div>
+          </div>
+        </div>
+
+        <div class="slot">
+          <div class="slot-tab">UI/UX</div>
+          <div class="slot-body">
+            <div class="avatar">DK</div>
+            <div class="slot-info">
+              <p class="role">UI/UX Developer</p>
+              <p class="name">Devon Kim</p>
+              <div class="chips"><span class="chip">Figma</span><span class="chip">User testing</span></div>
+            </div>
+            <div class="match">89%<br>match</div>
+          </div>
+        </div>
+
+        <div class="slot">
+          <div class="slot-tab">DATABASE</div>
+          <div class="slot-body">
+            <div class="avatar">AO</div>
+            <div class="slot-info">
+              <p class="role">Database Developer</p>
+              <p class="name">Amara Obi</p>
+              <div class="chips"><span class="chip">PostgreSQL</span><span class="chip">Schema design</span></div>
+            </div>
+            <div class="match">91%<br>match</div>
+          </div>
+        </div>
+
+        <div class="slot open">
+          <div class="slot-tab">DSA</div>
+          <div class="slot-body">
+            <div class="avatar">?</div>
+            <div class="slot-info">
+              <p class="role">DSA / Programming</p>
+              <p class="name">Role still open</p>
+              <div class="chips"><span class="chip">3 candidates ready</span></div>
+            </div>
+            <div class="match">→<br>review</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="how" class="alt">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>From profile to roster in four steps</h2>
+        <p>The same profile you fill out once gets weighed against every project on campus looking for your skill set.</p>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <p class="step-num">i.</p>
+          <h3>Build your profile</h3>
+          <p>List your skills, interests, past project experience, weekly availability, and the domains you want to work in.</p>
+        </div>
+        <div class="step">
+          <p class="step-num">ii.</p>
+          <h3>Post your open roles</h3>
+          <p>Starting a project? Define what it needs — say, one back-end developer, one UI/UX designer, one database developer, one DSA specialist.</p>
+        </div>
+        <div class="step">
+          <p class="step-num">iii.</p>
+          <h3>Review your matches</h3>
+          <p>Campus Connect ranks students against each role and shows why they fit — shared skills, overlapping availability, relevant domain.</p>
+        </div>
+        <div class="step">
+          <p class="step-num">iv.</p>
+          <h3>Lock in your team</h3>
+          <p>Send invites, confirm roles, and start building with a roster that's balanced instead of whoever replied first.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="factors">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>What goes into a match</h2>
+        <p>No single factor decides a recommendation. Campus Connect weighs all six together, per role.</p>
+      </div>
+
+      <div class="factor-grid">
+        <div class="factor">
+          <h3><span class="mark"></span>Skills</h3>
+          <p>Languages, frameworks, and tools a student has actually used, not just listed.</p>
+        </div>
+        <div class="factor">
+          <h3><span class="mark"></span>Interests</h3>
+          <p>The kinds of problems and products a student wants to work on right now.</p>
+        </div>
+        <div class="factor">
+          <h3><span class="mark"></span>Experience</h3>
+          <p>Prior coursework, hackathons, and shipped projects relevant to the role.</p>
+        </div>
+        <div class="factor">
+          <h3><span class="mark"></span>Availability</h3>
+          <p>Weekly hours a student can commit, checked against the project's pace.</p>
+        </div>
+        <div class="factor">
+          <h3><span class="mark"></span>Preferred domain</h3>
+          <p>Whether the student wants to be building in, say, health, fintech, or gaming.</p>
+        </div>
+        <div class="factor">
+          <h3><span class="mark"></span>Required role</h3>
+          <p>The specific seat a project is trying to fill, matched to who can actually fill it.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="example" class="alt">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>What a finished match looks like</h2>
+        <p>A project posts four roles. Campus Connect returns a ranked candidate for each, with the overlap that earned the recommendation.</p>
+      </div>
+
+      <div class="team-card">
+        <div class="team-card-head">
+          <div>
+            <h3>Campus Marketplace App</h3>
+            <p>A buy-and-sell app for dorm move-outs, built by four second-year students over one semester.</p>
+          </div>
+          <span class="team-status">3 of 4 roles filled</span>
+        </div>
+
+        <div class="roster-full">
+          <div class="slot">
+            <div class="slot-tab">BACK-END</div>
+            <div class="slot-body">
+              <div class="avatar">RS</div>
+              <div class="slot-info">
+                <p class="role">Back-end Developer</p>
+                <p class="name">Riya Sharma — matched on Node.js, REST APIs, 12 hrs/week free</p>
+                <div class="chips"><span class="chip">Node.js</span><span class="chip">Express</span><span class="chip">REST APIs</span></div>
+              </div>
+              <div class="match">94%<br>match</div>
+            </div>
+          </div>
+
+          <div class="slot">
+            <div class="slot-tab">UI/UX</div>
+            <div class="slot-body">
+              <div class="avatar">DK</div>
+              <div class="slot-info">
+                <p class="role">UI/UX Developer</p>
+                <p class="name">Devon Kim — matched on Figma, user testing, marketplace-app interest</p>
+                <div class="chips"><span class="chip">Figma</span><span class="chip">Prototyping</span><span class="chip">User testing</span></div>
+              </div>
+              <div class="match">89%<br>match</div>
+            </div>
+          </div>
+
+          <div class="slot">
+            <div class="slot-tab">DATABASE</div>
+            <div class="slot-body">
+              <div class="avatar">AO</div>
+              <div class="slot-info">
+                <p class="role">Database Developer</p>
+                <p class="name">Amara Obi — matched on PostgreSQL, schema design, prior e-commerce project</p>
+                <div class="chips"><span class="chip">PostgreSQL</span><span class="chip">Schema design</span></div>
+              </div>
+              <div class="match">91%<br>match</div>
+            </div>
+          </div>
+
+          <div class="slot open">
+            <div class="slot-tab">DSA</div>
+            <div class="slot-body">
+              <div class="avatar">?</div>
+              <div class="slot-info">
+                <p class="role">DSA / Programming</p>
+                <p class="name">3 candidates ready for review — none confirmed yet</p>
+                <div class="chips"><span class="chip">Awaiting team decision</span></div>
+              </div>
+              <div class="match">→<br>review</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="wrap">
+      <div class="cta-inner">
+        <h2>Your next teammate is already on campus. Go find them.</h2>
+        <a href="#" class="btn primary">Create your profile</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <span>Campus Connect</span>
+  <span>Built for students, by students.</span>
+</footer>
+
+</body>
+</html>

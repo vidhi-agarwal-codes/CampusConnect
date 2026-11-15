@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Campus Connect - Smart Team Builder</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="logo">🎓 CampusConnect</div>
+    <div class="nav-links">
+      <a href="#" class="active">Find Teams</a>
+      <a href="#">My Profile</a>
+      <a href="#">Current Projects</a>
+    </div>
+  </nav>
+
+  <!-- Main Container -->
+  <main class="dashboard">
+    
+    <!-- Left Column: Your Project Requirements -->
+    <section class="project-requirements">
+      <h2>Project: E-Commerce App</h2>
+      <p class="subtitle">System recommendations based on your required roles:</p>
+      
+      <div class="role-status-list">
+        <div class="role-status filled">
+          <span>🎨 UI/UX Designer</span>
+          <span class="status-badge filled">Matched</span>
+        </div>
+        <div class="role-status pending">
+          <span>⚙️ Backend Developer</span>
+          <span class="status-badge look">Searching...</span>
+        </div>
+        <div class="role-status pending">
+          <span>🗄️ Database Developer</span>
+          <span class="status-badge look">Searching...</span>
+        </div>
+        <div class="role-status pending">
+          <span>🧠 DSA / Programmer</span>
+          <span class="status-badge look">Searching...</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Right Column: Recommended Matches -->
+    <section class="recommendations">
+      <h2>Top Recommended Candidates</h2>
+      
+      <div class="student-grid">
+        
+        <!-- Student 1: Backend Match -->
+        <div class="student-card">
+          <div class="card-header">
+            <h3>Pranati Joshi</h3>
+            <span class="role-tag backend">Best Match: Backend</span>
+          </div>
+          <p class="bio">Passionate about scalable architecture and APIs.</p>
+          <div class="skills">
+            <span>Node.js</span>
+            <span>Express</span>
+            <span>Python</span>
+            <span>Available: 15 hrs/wk</span>
+          </div>
+          <button type="button" class="invite-btn">Send Team Invite</button>
+        </div>
+
+        <!-- Student 2: Database Match -->
+        <div class="student-card">
+          <div class="card-header">
+            <h3>Vidhi Agarwal</h3>
+            <span class="role-tag database">Best Match: Database</span>
+          </div>
+          <p class="bio">SQL optimizer. Loves data modeling and indexing.</p>
+          <div class="skills">
+            <span>PostgreSQL</span>
+            <span>MongoDB</span>
+            <span>Redis</span>
+            <span>Available: 10 hrs/wk</span>
+          </div>
+          <button type="button" class="invite-btn">Send Team Invite</button>
+        </div>
+
+        <!-- Student 3: DSA Match -->
+        <div class="student-card">
+          <div class="card-header">
+            <h3>Gaurangi Mehta</h3>
+            <span class="role-tag dsa">Best Match: DSA</span>
+          </div>
+          <p class="bio">Competitive programmer. 4-star on CodeChef.</p>
+          <div class="skills">
+            <span>C++</span>
+            <span>Java</span>
+            <span>Algorithms</span>
+            <span>Available: 20 hrs/wk</span>
+          </div>
+          <button type="button" class="invite-btn">Send Team Invite</button>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+</body>
+</html>
